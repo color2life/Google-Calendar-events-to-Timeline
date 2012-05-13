@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Timeline JSON Template</title>
+		<meta name="description" content="Template Description">
+		
+		<!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+		<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script type="text/javascript" src="jquery.dateFormat-1.0.js"></script>
+		<script type="text/javascript" src="timeline.js"></script>
+		<script>
+    $(document).ready(function() {		      
+		                $.getJSON("http://www.google.com/calendar/feeds/sa6neitu5e9kd9p43nfgf2vf34@group.calendar.google.com/public/full?alt=json-in-script&max-results=25&singleevents=false&sortorder=ascending&orderby=starttime&callback=?",
+
+        
+        function(json){
+          var html = '<ul id="event_feed">';
+
+          $.each(json.feed.entry,function(i,entry) {
+            html += '<li><time>' + $.format.date(entry['gd$when'][0].startTime + ' 00:00:00.000', "yyyy, MM, dd") +'</time> <time>' + $.format.date(entry['gd$when'][0].endTime + ' 00:00:00.000', "yyyy, MM, dd") +'</time> <h3>' + entry.title.$t + '</h3><article><p>' + entry['description'] +'</p></article></li>';
+          });
+          html += '</ul>';
+
+          $('#events').html(html);
+          var timeline = new VMM.Timeline();
+  				timeline.init();
+        });
+      });
+</script>
+		<!-- END Timeline Embed -->
+		
+	  <!-- CSS -->
+	  <link href="timeline.css" rel="stylesheet">
+		<style>
+			html, body {
+				height:100%;
+				padding: 0px;
+				margin: 0px;
+			}
+
+			
+		</style>
+		
+	</head>
+
+	<body>
+	  <div id="calendar"></div>
+	  <div id="timeline">
+	    <section>													<!-- Timeline Start Screen -->
+				<time></time>									<!-- Timeline Begins Date -->
+				<h2>This is google calendar timeline</h2>						<!-- Main Headline -->
+				<article>												<!-- Main Text -->
+					<p>using really awesome timeline created by <a href="http://timeline.verite.co/">VéritéCo</a></p>
+				</article>
+				<figure>						
+					<img src="calendar.png">				<!-- Media, can also be a link to youtube video etc (optional) -->
+					<cite>Google Calendar</cite>			<!-- Credit for media (optional) -->
+					<figcaption>google Calendar</figcaption>			<!-- Caption for media (optional) -->
+				</figure>
+			</section>
+			
+			<ul id="events">
+
+			</ul>
+		</div>
+	</body>
+</html>
